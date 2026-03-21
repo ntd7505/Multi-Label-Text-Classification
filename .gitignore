@@ -1,0 +1,4 @@
+test/
+craw data/
+.venv/
+__pycache__/
