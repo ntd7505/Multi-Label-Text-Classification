@@ -20,11 +20,22 @@ Thể thao  →  Bóng đá  →  Champions League
 
 ## Yêu cầu
 
-- Python 3.10+
+- Python 3.10
+- GPU với CUDA 11.8 (khuyến nghị)
 
+### Cài đặt
 
 ```bash
-pip install torch gensim underthesea scikit-learn matplotlib pandas
+# Tạo virtual environment
+py -3.10 -m venv .venv
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # Linux/Mac
+
+# Cài PyTorch CUDA 11.8
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Cài các thư viện còn lại
+pip install -r requirements.txt
 ```
 
 ---
@@ -57,7 +68,7 @@ notebooks/predict.ipynb
 ```
 Load checkpoint, dự đoán nhãn cho bài viết mới.
 
-> Sửa `DATA_DIR` và `OUTPUT_DIR` trong Cell 1 của mỗi notebook cho phù hợp với máy.
+> Các notebook tự động xác định đường dẫn project (sử dụng `Path.cwd().parent`). Chỉ cần chạy notebook từ đúng thư mục chứa nó.
 
 ---
 
@@ -75,14 +86,17 @@ Load checkpoint, dự đoán nhãn cho bài viết mới.
 
 ```
 ├── data/
-│   ├── raw_data.json               # dữ liệu crawl thô
-│   └── process_data/
-│       ├── dataset.json            # tokens + multi-hot vectors
-│       ├── vocab.json              # token → index
-│       └── label_map.json          # nhãn → index
-├── dictionary/
-│   ├── vietnamese-stopwords.txt
-│   └── vietnamese-stopwords-dash.txt
+│   ├── raw/
+│   │   └── raw_data.json              # dữ liệu crawl thô
+│   ├── process_data/
+│   │   ├── dataset.json               # tokens + multi-hot vectors
+│   │   ├── vocab.json                 # token → index
+│   │   └── label_map.json             # nhãn → index
+│   ├── dictionary/
+│   │   ├── vietnamese-stopwords.txt
+│   │   └── vietnamese-stopwords-dash.txt
+│   ├── label_cleaning.ipynb           # chuẩn hóa nhãn
+│   └── label_stats.ipynb              # thống kê phân phối nhãn
 ├── notebooks/
 │   ├── preprocessing_data.ipynb
 │   ├── train_w2v_clean.ipynb
@@ -90,10 +104,10 @@ Load checkpoint, dự đoán nhãn cho bài viết mới.
 │   └── predict.ipynb
 └── output/
     ├── models/
-    │   ├── checkpoints/            # best_model.pt
+    │   ├── checkpoints/               # best_model.pt
     │   └── word2vec.model
-    ├── results/                    # results_w2v_global.json
-    └── figures/                    # biểu đồ đánh giá
+    ├── results/                       # results_w2v_global.json
+    └── figures/                       # biểu đồ đánh giá
 ```
 
 ---
