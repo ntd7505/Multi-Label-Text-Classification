@@ -4,13 +4,6 @@ label_merge_optimized.py
 Logic merge nhãn tối ưu cho dataset VnExpress (HARNN).
 Thay thế Cell 2 + Cell 3 trong preprocessing_updated.ipynb.
 
-Các cải tiến so với phiên bản cũ:
-  1. Sửa tên nhãn lệch (Giải sao → Giới sao, Nhân khoa → Nhãn khoa, ...)
-  2. Cứu toàn bộ 765 bài "Tin tức" L2 bằng TIN_TUC_MAP đầy đủ
-  3. Tách rõ Phân tích là L2 độc lập trong Thế giới (không merge vào Tư liệu)
-  4. Loại bỏ rule duplicate (Ngoại hạng Anh xuất hiện ở cả L2_TO_L3 lẫn L3_MERGE)
-  5. Drop chỉ áp dụng cho nhãn < 5 bài hoặc nhãn format/sự kiện thuần tuý
-  6. Thêm rescue map đầy đủ khi L3 bị drop nhưng L2 chưa có
 """
 
 # ─────────────────────────────────────────────────────────────────────────────

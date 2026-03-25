@@ -1,103 +1,128 @@
-# HARNN — Phân loại văn bản tiếng Việt đa nhãn phân cấp
+# HARNN — Phân loại văn bản tiếng Việt theo phân cấp nhãn
 
-Tự động phân loại bài viết VnExpress vào hệ thống nhãn 3 tầng dựa trên kiến trúc HARNN (Hierarchical Attention-based Recurrent Neural Network).
+Project huấn luyện và suy luận mô hình HARNN cho bài toán phân loại bài viết tiếng Việt theo 3 mức nhãn:
 
 ```
-Thể thao  →  Bóng đá  →  Champions League
-   L1           L2              L3
-  (13 nhãn)  (40 nhãn)      (43 nhãn)
+L1 (domain) → L2 (sub-domain) → L3 (fine-grained)
 ```
 
-**Kết quả trên test set:**
-
-| Level | F1 | AUPRC |
-|-------|----|-------|
-| L1 | 0.902 | 0.961 |
-| L2 | 0.767 | 0.898 |
-| L3 | 0.660 | 0.775 |
+Hiện tại pipeline trong project dùng dữ liệu VnExpress đã xử lý trong `data/process_data/` và workflow chính bằng notebook.
 
 ---
 
-## Yêu cầu
+## 1) Yêu cầu môi trường
 
 - Python 3.10+
-
+- Khuyến nghị tạo môi trường ảo trước khi cài
 
 ```bash
-pip install torch gensim underthesea scikit-learn matplotlib pandas
+pip install -r requirements.txt
 ```
 
 ---
 
-## Hướng dẫn chạy
-
-Chạy theo đúng thứ tự:
-
-**Bước 1 — Tiền xử lý**
-```
-notebooks/preprocessing_data.ipynb
-```
-Đọc `raw_data.json`, chuẩn hóa nhãn, tokenize, xuất ra `dataset.json` · `vocab.json` · `label_map.json`.
-
-**Bước 2 — Train**
-```
-notebooks/train_w2v_clean.ipynb
-```
-Train Word2Vec trên corpus, train HARNN model, lưu checkpoint tốt nhất vào `output/models/checkpoints/best_model.pt`.
-
-**Bước 3 — Đánh giá** *(tùy chọn)*
-```
-notebooks/evaluation.ipynb
-```
-Vẽ confusion matrix, F1 theo từng nhãn, precision-recall curve.
-
-**Bước 4 — Dự đoán**
-```
-notebooks/predict.ipynb
-```
-Load checkpoint, dự đoán nhãn cho bài viết mới.
-
-> Sửa `DATA_DIR` và `OUTPUT_DIR` trong Cell 1 của mỗi notebook cho phù hợp với máy.
-
----
-
-## Dataset
-
-| | |
-|--|--|
-| Nguồn | VnExpress — crawl bằng Selenium |
-| Kích thước | 5541 bài · 13 domain |
-| Chia | Train 80% · Val 10% · Test 10% |
-
----
-
-## Cấu trúc thư mục
+## 2) Cấu trúc project
 
 ```
+NLP_Project/
+├── craw/
+│   └── crawl_data.py
 ├── data/
-│   ├── raw_data.json               # dữ liệu crawl thô
-│   └── process_data/
-│       ├── dataset.json            # tokens + multi-hot vectors
-│       ├── vocab.json              # token → index
-│       └── label_map.json          # nhãn → index
-├── dictionary/
-│   ├── vietnamese-stopwords.txt
-│   └── vietnamese-stopwords-dash.txt
+│   ├── dictionary/
+│   │   ├── vietnamese-stopwords.txt
+│   │   └── vietnamese-stopwords-dash.txt
+│   ├── process_data/
+│   │   ├── dataset.json
+│   │   ├── vocab.json
+│   │   └── label_map.json
+│   ├── raw/
+│   ├── train_data.json          # sinh ra từ notebook train
+│   └── test_data.json           # sinh ra từ notebook train
 ├── notebooks/
 │   ├── preprocessing_data.ipynb
 │   ├── train_w2v_clean.ipynb
 │   ├── evaluation.ipynb
 │   └── predict.ipynb
-└── output/
-    ├── models/
-    │   ├── checkpoints/            # best_model.pt
-    │   └── word2vec.model
-    ├── results/                    # results_w2v_global.json
-    └── figures/                    # biểu đồ đánh giá
+├── output/
+│   ├── models/
+│   │   ├── checkpoints/
+│   │   └── word2vec.model
+│   ├── results/
+│   ├── figures/
+│   └── log/
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## Tham khảo
+## 3) Quy trình chạy chuẩn
 
-Van Lam et al. *"Exploring Hierarchical Multi-Label Text Classification Models using Attention-Based Approaches for Vietnamese language"*. NLPIR 2023. [DOI: 10.1145/3639233.3639244](https://dl.acm.org/doi/10.1145/3639233.3639244)
+### Bước 1 — Tiền xử lý dữ liệu
+
+Chạy notebook:
+
+`notebooks/preprocessing_data.ipynb`
+
+Kết quả đầu ra chính:
+
+- `data/process_data/dataset.json`
+- `data/process_data/vocab.json`
+- `data/process_data/label_map.json`
+
+### Bước 2 — Train mô hình
+
+Chạy notebook:
+
+`notebooks/train_w2v_clean.ipynb`
+
+Notebook này sẽ:
+
+- Chia train/val/test theo iterative stratification
+- Lưu lại split:
+  - `data/train_data.json`
+  - `data/test_data.json`
+- Train Word2Vec + HARNN
+- Lưu checkpoint tốt nhất vào:
+  - `output/models/checkpoints/best_model.pt`
+
+### Bước 3 — Đánh giá mô hình
+
+Chạy notebook:
+
+`notebooks/evaluation.ipynb`
+
+Notebook đánh giá hiện tại sử dụng trực tiếp `data/test_data.json`.
+
+Kết quả và biểu đồ được lưu ở:
+
+- `output/results/`
+- `output/figures/`
+
+### Bước 4 — Dự đoán dữ liệu mới
+
+Chạy notebook:
+
+`notebooks/predict.ipynb`
+
+Notebook đã được tối giản còn các cell quan trọng để:
+
+- Load checkpoint + artifacts
+- Chạy hàm predict
+- Dự đoán trực tiếp từ text nhập tay
+
+---
+
+## 4) Ghi chú quan trọng
+
+- Một số notebook đang dùng đường dẫn tuyệt đối Windows (`C:\Users\Admin\...`).
+- Nếu chạy trên máy khác, cần sửa lại các biến path trong Cell 1 của notebook tương ứng.
+- Các thư mục output và dữ liệu sinh ra đã được cấu hình để bỏ qua trong `.gitignore`.
+
+---
+
+## 5) Tham khảo
+
+Van Lam et al. *"Exploring Hierarchical Multi-Label Text Classification Models using Attention-Based Approaches for Vietnamese language"*. NLPIR 2023.
+
+DOI: https://dl.acm.org/doi/10.1145/3639233.3639244

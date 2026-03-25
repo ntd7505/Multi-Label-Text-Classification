@@ -1,7 +1,23 @@
-test/
-craw/
-.venv/
+# Python
 __pycache__/
-notebooks/__pycache__/
+*.py[cod]
+*$py.class
 
-# generated artifacts
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/__pycache__/
+data/.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Temporary / local test folders
+test/
+
+craw
