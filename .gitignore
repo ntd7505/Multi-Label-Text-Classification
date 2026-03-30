@@ -1,23 +1,29 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
 
-# Virtual environments
-.venv/
-venv/
-env/
+/*
 
-# Jupyter
+
+!/.gitignore
+!/README.md
+!/requirements.txt
+
+!/notebooks/
+
+!/data/
+
+
+/data/*
+
+!/data/dictionary/
+!/data/raw/
+
+output/
+/data/process_data/
+/data/label_stats.ipynb
+/data/test_data.json
+/data/train_data.json
+
 .ipynb_checkpoints/
-notebooks/__pycache__/
-data/.ipynb_checkpoints/
-
-# OS / editor
+__pycache__/
+*.pyc
 .DS_Store
 Thumbs.db
-
-# Temporary / local test folders
-test/
-
-craw
