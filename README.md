@@ -25,11 +25,11 @@ B --> C[Level 3: Fine-grained]
 
 ## 🧠 Kiến trúc mô hình
 
-```mermaid id="model01"
+```mermaid
 flowchart LR
-    A[Input Text] --> B[Tiền xử lý<br/>Tokenize + Clean]
-    B --> C[Embedding<br/>Word2Vec]
-    C --> D[BiGRU Encoder]
+    A[Input Text] --> B[Preprocessing]
+    B --> C[Embedding]
+    C --> D[BiGRU]
 
     D --> E1[Attention L1]
     D --> E2[Attention L2]
@@ -38,10 +38,6 @@ flowchart LR
     E1 --> F1[Output L1]
     E2 --> F2[Output L2]
     E3 --> F3[Output L3]
-
-    F1 --> G[HAM (LSTMCell)]
-    G --> F2
-    G --> F3
 ```
 
 ---
