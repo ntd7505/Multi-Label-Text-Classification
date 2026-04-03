@@ -66,7 +66,7 @@ flowchart LR
 ## ⚙️ Cài đặt
 
 ```bash id="install01"
-git clone <your-repo-url>
+git clone [<your-repo-url>](https://github.com/ntd7505/Multi-Label-Text-Classification.git)
 cd NLP_Project
 pip install -r requirements.txt
 ```
