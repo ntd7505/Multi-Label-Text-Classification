@@ -26,10 +26,8 @@ cd NLP_Project
 
 # Cài đặt thư viện
 pip install -r requirements.txt
-
----
-
-## 📂 **2. Cấu trúc thư mục (Project Structure)**
+📂 2. Cấu trúc thư mục (Project Structure)
+Plaintext
 NLP_Project/
 ├── craw/
 │   └── crawl_data.py
@@ -58,9 +56,7 @@ NLP_Project/
 │   └── log/
 ├── requirements.txt
 └── README.md
-
-## 🚀 3. Quy trình chạy chuẩn (Workflow)
-
+🚀 3. Quy trình chạy chuẩn (Workflow)
 Pipeline của dự án được đóng gói trực quan qua các file Jupyter Notebook. Vui lòng chạy theo thứ tự sau:
 
 Bước 1: Tiền xử lý dữ liệu
@@ -93,14 +89,12 @@ File thực thi: notebooks/predict.ipynb
 
 Mục đích: Notebook đã được tối giản hóa. Bạn chỉ cần chạy các cell để load file checkpoint cùng các artifacts, sau đó sử dụng hàm predict để dự đoán tự động phân cấp nhãn cho bất kỳ đoạn văn bản tiếng Việt nào được nhập tay.
 
-## ⚠️ 4. Ghi chú quan trọng
-
+⚠️ 4. Ghi chú quan trọng
 Vấn đề đường dẫn (Path Variables): Một số notebook hiện tại đang sử dụng đường dẫn tuyệt đối của môi trường Windows (VD: C:\Users\Admin\...). Khi clone về và chạy trên máy khác (hoặc Linux/macOS), bạn cần sửa lại các biến path trong Cell đầu tiên của mỗi notebook tương ứng thành đường dẫn tương đối hoặc khớp với thư mục máy của bạn.
 
 Git Ignore: Các thư mục chứa dữ liệu thô, output logs, models lớn và figures đã được cấu hình loại bỏ trong .gitignore để tránh phình to kích thước repository. Bạn cần tự tạo lại cấu trúc folder rỗng (nếu thiếu) khi mới clone về.
 
-## 👥 5. Nhóm tác giả
-
+👥 5. Nhóm tác giả
 Trịnh Đăng Huy
 
 Vũ Hải Đăng
@@ -109,8 +103,7 @@ Nguyễn Thành Đạt
 
 (Trường Đại học Xây dựng Hà Nội - Lớp học phần: 68CS2)
 
-## 📚 6. Nguồn tham khảo
-
+📚 6. Nguồn tham khảo
 Dự án này được lấy cảm hứng và xây dựng dựa trên nền tảng lý thuyết từ nghiên cứu:
 
 Van Lam et al. "Exploring Hierarchical Multi-Label Text Classification Models using Attention-Based Approaches for Vietnamese language". NLPIR 2023. DOI: https://dl.acm.org/doi/10.1145/3639233.3639244
