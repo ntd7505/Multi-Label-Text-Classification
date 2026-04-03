@@ -27,8 +27,9 @@ cd NLP_Project
 # Cài đặt thư viện
 pip install -r requirements.txt
 
-## 📂 2. Cấu trúc thư mục (Project Structure)
+---
 
+## 📂 **2. Cấu trúc thư mục (Project Structure)**
 NLP_Project/
 ├── craw/
 │   └── crawl_data.py
