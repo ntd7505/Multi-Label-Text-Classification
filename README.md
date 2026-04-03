@@ -26,6 +26,7 @@ cd NLP_Project
 
 # Cài đặt thư viện
 pip install -r requirements.txt
+
 📂 2. Cấu trúc thư mục (Project Structure)
 Plaintext
 NLP_Project/
@@ -56,6 +57,7 @@ NLP_Project/
 │   └── log/
 ├── requirements.txt
 └── README.md
+
 🚀 3. Quy trình chạy chuẩn (Workflow)
 Pipeline của dự án được đóng gói trực quan qua các file Jupyter Notebook. Vui lòng chạy theo thứ tự sau:
 
